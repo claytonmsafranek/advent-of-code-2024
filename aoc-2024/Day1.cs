@@ -17,7 +17,7 @@ namespace aoc_2024
         {
             var answer = 0;
             var similarityScore = 0;
-            var day1Input = ReadInputFromFile("C:\\\\Users\\\\Clayton.Safranek\\\\Documents\\\\projects\\\\aoc-2024\\\\aoc-2024\\\\day1-input.txt");
+
 
             var locationList1 = new List<int>();
             var locationList2 = new List<int>();
