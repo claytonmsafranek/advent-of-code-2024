@@ -22,19 +22,17 @@ class Program
 
     static void SolveProblem(int problemNumber)
     {
+        var solutions = new Solutions();
         switch (problemNumber)
         {
             case 1:
-                // Add code to solve problem 1
                 Console.WriteLine("Solving problem 1...");
-                var day1 = new Day1();
-                day1.EvaluateInput();
+                solutions.SolveDay1();
                 break;
             case 2:
-                // Add code to solve problem 2
                 Console.WriteLine("Solving problem 2...");
+                solutions.SolveDay2();
                 break;
-            // Add more cases as needed
             default:
                 Console.WriteLine("Problem not implemented yet.");
                 break;

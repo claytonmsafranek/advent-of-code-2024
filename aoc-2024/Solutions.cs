@@ -6,17 +6,57 @@ using System.Threading.Tasks;
 
 namespace aoc_2024
 {
-    public class Day1
+    public class Solutions
     {
         static string[] ReadInputFromFile(string filePath)
         {
             return File.ReadAllLines(filePath);
         }
 
-        public void EvaluateInput()
+        static bool IsSafeReport(int[] array)
+        {
+            if (array.Length < 2)
+                return true;
+
+            bool isIncreasing = true;
+            bool isDecreasing = true;
+
+            for (int i = 1; i < array.Length; i++)
+            {
+                int jump = array[i] - array[i - 1];
+                if (jump < 1 && jump > -1 || jump > 3 || jump < -3)
+                    return false;
+
+                if (jump > 0)
+                    isDecreasing = false;
+                if (jump < 0)
+                    isIncreasing = false;
+            }
+
+            return isIncreasing || isDecreasing;
+        }
+
+        static bool Day2ProblemDampener(int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                // Create a new array with the current element removed
+                int[] newArray = new int[array.Length - 1];
+                Array.Copy(array, 0, newArray, 0, i);
+                Array.Copy(array, i + 1, newArray, i, array.Length - i - 1);
+
+                if (IsSafeReport(newArray))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void SolveDay1()
         {
             var answer = 0;
             var similarityScore = 0;
+            var day1Input = ReadInputFromFile(@"..\..\..\day1-input.txt");
 
 
             var locationList1 = new List<int>();
@@ -82,6 +122,34 @@ namespace aoc_2024
             Console.WriteLine("Similarity score: " + similarityScore);
         }
 
+        public void SolveDay2()
+        {
+            var safeReports = 0;
+            var day2Input = ReadInputFromFile(@"..\..\..\day2-input.txt");
+            foreach (var line in day2Input)
+            {
+                var lineData = new List<int>();
+                // split the line into an array of numbers
+                string[] numberStrings = line.Split(' '); // Split the string by spaces
+                int[] numberArray = Array.ConvertAll(numberStrings, int.Parse);
+
+                // check if each line report is safe, if so add to total count
+                if (IsSafeReport(numberArray))
+                {
+                    safeReports += 1;
+                }
+                else
+                {
+                    // check with the problem dampener
+                    if (Day2ProblemDampener(numberArray))
+                    {
+                        safeReports += 1;
+                    }
+                }
+
+            }
+            Console.WriteLine("Number of safe reports: " +  safeReports);
+        }
 
     }
 }
